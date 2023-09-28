@@ -1,0 +1,54 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /api/characters/search-character-appearance:
+    get:
+      tags:
+        - character-controller
+      summary: Search character appearances
+      description: Returns character appearances and their first appearance.
+      operationId: searchCharacterAppearance
+      parameters:
+        - name: name
+          in: query
+          description: Name of the character to search for
+          required: true
+          schema:
+            type: string
+      responses:
+        '404':
+          description: Character not found.
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CharacterAppearance'
+        '500':
+          description: Internal server error.
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CharacterAppearance'
+        '200':
+          description: Success. Returns character appearances and first appearance.
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CharacterAppearance'
+components:
+  schemas:
+    CharacterAppearance:
+      type: object
+      properties:
+        name:
+          type: string
+        episodes:
+          type: array
+          items:
+            type: string
+        firstAppearance:
+          type: string
